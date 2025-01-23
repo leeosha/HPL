@@ -4,7 +4,7 @@ def hierarchical_pairwise_loss(pctr_logits, pcvr_logits, click_labels, pay_label
     pcvr = tf.nn.sigmoid(pcvr_logits)
     pctcvr = pctr * pcvr
     pctcvr_logit = tf.math.log(pctcvr/(1-pctcvr))
-    ########################################
+    ######################################## 
     # 1.pointwise loss
     ########################################
     ctcvr_loss_weight = 2
