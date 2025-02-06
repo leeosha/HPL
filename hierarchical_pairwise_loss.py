@@ -12,20 +12,10 @@ def get_loss(pctr_logits, pcvr_logits, click_labels, pay_labels, prices):
     ctr_pointwise_loss = tf.reduce_mean(tf.losses.log_loss(click_labels, pctr))
     pointwise_loss = ctcvr_loss_weight * ctcvr_pointwise_loss + ctr_pointwise_loss
 
-    ######################################## 
-    # 2.CTCVR pairwise loss
-    ########################################
-    pairwise_pctcvr = tf.nn.sigmoid(pctcvr_logit - tf.transpose(pctcvr_logit))
-    pay_label_gt_mask = tf.where(tf.greater(pay_labels - tf.transpose(pay_labels), 0), tf.ones_like(pairwise_pctcvr), tf.zeros_like(pairwise_pctcvr))
-    ctcvr_pairwise_rank_loss = tf.reduce_mean(tf.losses.log_loss(
-        predictions=pairwise_logits,
-        labels=tf.ones_like(pairwise_pctcvr),
-        weights=click_condition_on_pay_mask
-    ))
-    ctcvr_pairwise_rank_loss = tf.where(tf.is_nan(ctcvr_pairwise_rank_loss), tf.zeros_like(ctcvr_pairwise_rank_loss), ctcvr_pairwise_rank_loss)
+    
 
     ########################################
-    # 3.hierarchical pairwise loss 
+    # 2.hierarchical pairwise loss 
     ########################################
     pairwise_pctcvr = tf.nn.sigmoid(pctcvr_logit - tf.transpose(pctcvr_logit))
     price_gt_mask = tf.where(tf.greater(prices - tf.transpose(prices), 0), tf.ones_like(pairwise_pctcvr), tf.zeros_like(pairwise_pctcvr))
@@ -50,5 +40,5 @@ def get_loss(pctr_logits, pcvr_logits, click_labels, pay_labels, prices):
     ))
     price_hpl_loss = tf.where(tf.is_nan(price_hpl_loss), tf.zeros_like(price_hpl_loss), price_hpl_loss)
 
-    loss = pointwise_loss + ctcvr_pairwise_loss + ctr_hpl_loss + price_hpl_loss
+    loss = pointwise_loss + ctr_hpl_loss + price_hpl_loss
     return loss
