@@ -3,7 +3,7 @@ def get_loss(pctr_logits, pcvr_logits, click_labels, pay_labels, prices):
     pctr = tf.nn.sigmoid(pctr_logits)
     pcvr = tf.nn.sigmoid(pcvr_logits)
     pctcvr = pctr * pcvr
-    pctcvr_logit = tf.math.log(pctcvr/(1-pctcvr))
+    
     ######################################## 
     # 1.pointwise loss
     ########################################
