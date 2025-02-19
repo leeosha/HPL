@@ -17,7 +17,7 @@ def get_loss(pctr_logits, pcvr_logits, click_labels, pay_labels, prices):
     ########################################
     # 2.hierarchical pairwise loss 
     ########################################
-    pairwise_pctcvr = tf.nn.sigmoid(pctcvr_logit - tf.transpose(pctcvr_logit))
+    pairwise_pctcvr = tf.nn.sigmoid(pctcvr - tf.transpose(pctcvr))
     price_gt_mask = tf.where(tf.greater(prices - tf.transpose(prices), 0), tf.ones_like(pairwise_pctcvr), tf.zeros_like(pairwise_pctcvr))
     click_label_ge_mask = tf.where(tf.greater_equal(click_labels - tf.transpose(click_labels), 0), tf.ones_like(pairwise_pctcvr),tf.zeros_like(pairwise_pctcvr))
     pay_label_ge_mask = tf.where(tf.greater_equal(pay_labels - tf.transpose(pay_labels), 0), tf.ones_like(pairwise_pctcvr),tf.zeros_like(pairwise_pctcvr))
