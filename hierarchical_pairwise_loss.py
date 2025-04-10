@@ -7,10 +7,10 @@ def get_loss(pctr_logits, pcvr_logits, click_labels, pay_labels, prices):
     ######################################## 
     # 1.pointwise loss
     ########################################
-    ctcvr_loss_weight = 2
+    
     ctcvr_pointwise_loss = tf.reduce_mean(tf.losses.log_loss(pay_labels, pctcvr))
     ctr_pointwise_loss = tf.reduce_mean(tf.losses.log_loss(click_labels, pctr))
-    pointwise_loss = ctcvr_loss_weight * ctcvr_pointwise_loss + ctr_pointwise_loss
+    pointwise_loss =  ctcvr_pointwise_loss + ctr_pointwise_loss
 
     
 
