@@ -1,7 +1,6 @@
 import tensorflow as tf
 def get_loss(pctr_logits, pcvr_logits, click_labels, pay_labels, prices, alpha, beta):
 
-  
     pctr = tf.nn.sigmoid(pctr_logits)
     pcvr = tf.nn.sigmoid(pcvr_logits)
     pctcvr = pctr * pcvr
